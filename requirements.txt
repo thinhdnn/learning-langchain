@@ -1,0 +1,15 @@
+langchain
+langchain-community
+torch
+pypdf
+sentence-transformers
+gpt4all
+faiss-cpu
+openai
+openpyxl
+docx
+bs4
+python-docx
+langchain-openai
+psycopg2-binary
+tiktoken

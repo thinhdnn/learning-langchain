@@ -1,1 +1,1 @@
-# learning-langchain
+# learn-langchain
