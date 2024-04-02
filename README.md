@@ -22,8 +22,13 @@ To get started with LangChain Learning, follow these steps:
     ```
     python /app/VectorDB.py
     ```
+    
+4. Create the chromadb:
+    ```
+    python /app/ChrombaDB.py
+    ```
 
-4. Run the model:
+5. Run the model:
     ```
     python /app/AppChain.py
     ```
