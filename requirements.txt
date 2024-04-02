@@ -1,10 +1,10 @@
 langchain
 langchain-community
+sentence-transformers
 torch
 pypdf
-sentence-transformers
 gpt4all
-faiss-cpu
+faiss-gpu
 openai
 openpyxl
 docx
@@ -13,3 +13,4 @@ python-docx
 langchain-openai
 psycopg2-binary
 tiktoken
+chromadb

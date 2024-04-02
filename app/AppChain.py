@@ -56,27 +56,27 @@ class AppChain:
 
 
 # Load chain and model
+if __name__ == "__main__":
+    chain = AppChain()
+    llm = chain.loadModel("llama2-uncensored")
+    db = chain.readVectorDB('stores/db_faiss', 'models/all-MiniLM-L6-v2')
 
-chain = AppChain()
-llm = chain.loadModel("llama2-uncensored")
-db = chain.readVectorDB('stores/db_faiss', 'models/all-MiniLM-L6-v2')
 
+    # Geneate prompt
+    promtTemplate = """<|im_start|>system
+    Use information from the following text to answer the questions below 
+    {context}
+    <|im_end|>
+    <|im_start|>user
+    {question}
+    <|im_end|>
+    <|im_start|>assistant
+    """
 
-# Geneate prompt
-promtTemplate = """<|im_start|>system
-Use information from the following text to answer the questions below 
-{context}
-<|im_end|>
-<|im_start|>user
-{question}
-<|im_end|>
-<|im_start|>assistant
-"""
+    # Create prompt
+    prompt = chain.createPrompt('context', promtTemplate)
 
-# Create prompt
-prompt = chain.createPrompt('context', promtTemplate)
-
-# Run chain
-llmChain = chain.createChain(prompt, llm, db)
-reponse = llmChain.invoke({'query': 'What is a checkpoint ?'})
-print(reponse)
+    # Run chain
+    llmChain = chain.createChain(prompt, llm, db)
+    reponse = llmChain.invoke({'query': 'What is a checkpoint ?'})
+    print(reponse)

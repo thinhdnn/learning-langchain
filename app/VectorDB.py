@@ -1,7 +1,10 @@
 from  langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
-from langchain_community.vectorstores import FAISS
+from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader, CSVLoader
+from langchain_community.vectorstores import FAISS, Chroma
 from  langchain_community.embeddings import GPT4AllEmbeddings
+from langchain_community.embeddings.sentence_transformer import (
+    SentenceTransformerEmbeddings,
+)
 
 
 dataPath = 'data'
@@ -12,9 +15,9 @@ class VectorDatabase:
     def __init__(self):
         pass
 
-    def createFromFiles(self, dataPath, vectorDBPath):
+    def createFromFilesByFAISS(self, dataPath, vectorDBPath):
         # Load data from files
-        dirLoader = DirectoryLoader(dataPath, glob = '*.pdf', loader_cls = PyPDFLoader)
+        dirLoader = DirectoryLoader(dataPath, glob = '*.csv', loader_cls = CSVLoader)
         documents = dirLoader.load()
 
         # Split text into characters
@@ -28,7 +31,7 @@ class VectorDatabase:
 
         return db
     
-    def createFromDir(self, dataPath, vectorDBPath):
+    def createFromDirByFAISS(self, dataPath, vectorDBPath):
         # Load data from files
         dirLoader = DirectoryLoader(dataPath)
         documents = dirLoader.load()
@@ -44,8 +47,24 @@ class VectorDatabase:
 
         return db
 
+    def createFromFilesByChroma(self, dataPath, vectorDBPath):
+        # Load data from files
+        dirLoader = DirectoryLoader(dataPath, glob = '*.csv', loader_cls = CSVLoader)
+        documents = dirLoader.load()
+
+        # Split text into characters
+        textSplitters = RecursiveCharacterTextSplitter(chunk_size = 1000, chunk_overlap = 100)
+        chunks = textSplitters.split_documents(documents)
+        
+        # Generate embeddings
+        embeddings = SentenceTransformerEmbeddings(model_file = 'models/all-MiniLM-L6-v2')
+        db = Chroma.from_documents(chunks, embeddings)
+        db.save_local(vectorDBPath)
+
+        return db
 
 
-vectorDb = VectorDatabase()
-vectorDb.createFromFiles(dataPath = dataPath, vectorDBPath = vectorDBPath)
-#vectorDb.createFromDir(dataPath = dataPath, vectorDBPath = vectorDBPath)
+if __name__ == "__main__":
+    vectorDb = VectorDatabase()
+    vectorDb.createFromFilesByFAISS(dataPath = dataPath, vectorDBPath = vectorDBPath)
+    #vectorDb.createFromDir(dataPath = dataPath, vectorDBPath = vectorDBPath)
