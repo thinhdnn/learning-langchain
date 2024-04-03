@@ -1,3 +1,4 @@
+
 # LangChain Learning
 
 ## Description
@@ -8,27 +9,35 @@ LangChain Learning is a project aimed at familiarizing users with the LangChain 
 
 To get started with LangChain Learning, follow these steps:
 
-1. Clone the GitHub repository to your local machine:
+- Clone the GitHub repository to your local machine:
     ```
     git clone https://github.com/langchain-learning/langchain-learning.git
     ```
 
-2. Install dependencies using pip:
+- Install dependencies using pip:
     ```
     pip install -r requirements.txt
     ```
 
-3. Create the vector database:
+## Use
+-  Create the vector database
+    ```
+    Use this for FAISS CPU: 
+    vectorDb.createFromFilesByFAISS(dataPath = dataPath, vectorDBPath = vectorDBPath)
+
+	Use this for ChromaDB with GPU
+	vectorDb.createFromFilesByChroma(dataPath = dataPath, vectorDBPath = vectorDBPath)
+    ```
     ```
     python /app/VectorDB.py
     ```
     
-4. Create the chromadb:
+- Create the chromadb with multiple processing:
     ```
     python /app/ChrombaDB.py
     ```
 
-5. Run the model:
+- Run the model:
     ```
     python /app/AppChain.py
     ```
