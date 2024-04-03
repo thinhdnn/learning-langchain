@@ -4,7 +4,7 @@ sentence-transformers
 torch
 pypdf
 gpt4all
-faiss-gpu
+faiss-cpu
 openai
 openpyxl
 docx
