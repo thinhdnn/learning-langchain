@@ -1,4 +1,4 @@
-from langchain_community.llms import Ollama, LlamaCpp
+from langchain_community.llms import CTransformers, Ollama, LlamaCpp
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import RetrievalQA
@@ -33,7 +33,7 @@ class AppChain:
         # )
 
         llm = LlamaCpp(
-            model_path="models/llama-2-7b.Q5_0.gguf",
+            model_path="models/llama-2-7b.Q8_0.gguf",
             n_gpu_layers=1,
             n_batch=512,
             n_ctx=2048,
@@ -113,6 +113,6 @@ if __name__ == "__main__":
     # reponse = llmChain.invoke({'query': 'What is a checkpoint ?'})
     # print(reponse)
 
-    print ( llmChain("How much glaucoma is engouh ?"))
+    print ( llmChain("What is the appropriate dose of glaucoma ?"))
 
     #print( db.similarity_search("What is a checkpoint ?"))
